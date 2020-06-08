@@ -118,7 +118,7 @@ from pathlib import Path
 
 def save_fig():
     global fig_count
-    path = Path() / 'figs' / f'{fig_count:05}.png'
+    path = Path() / 'figs' / f'{fig_count:05}.pdf'
     plt.savefig(path)
     fig_count += 1
 
@@ -128,7 +128,7 @@ def display(classifier: Classifier, dataloader: DataLoader):
     Y = np.linspace(-4,4,64)
     region_data = []
     for x,y in product(X,Y):
-        region_data.append([x,y,get_region_color(classifier(torch.tensor([x,y])))])
+        region_data.append([x,y,get_region_color(classifier(torch.tensor([x,y]).float()))])
     region_array = np.array(region_data)
     region_colors = [sm for _,_,sm in region_array]
     plt.scatter(region_array[:,0], region_array[:,1], c=region_colors) # type: ignore
